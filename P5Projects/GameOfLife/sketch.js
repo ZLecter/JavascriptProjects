@@ -6,7 +6,9 @@ let ylen;
 
 let btClear;
 let btFill;
+let btPlay;
 let slSpeed;
+let play;
 
 function create2DArray (x, y){
 	let array = new Array(x);
@@ -27,6 +29,15 @@ function fillGrid(){
 			pointsOnGrid[i][j] = floor(random(2));
 }
 
+function changePlay(){
+	if(play)
+		btPlay.html('Play');
+	else
+		btPlay.html('Stop');
+
+	play = !play;
+}
+
 function setup (){
 	createCanvas(500,500);
 	frameRate(60);
@@ -42,6 +53,10 @@ function setup (){
 
 	btFill = createButton('Random Grid');
 	btFill.mousePressed(fillGrid);
+
+	btPlay = createButton('Play');
+	btPlay.mousePressed(changePlay);
+	play = false;
 
 	createP('Speed\n');
 	slSpeed = createSlider(1, 60, 30, 1);
@@ -63,7 +78,8 @@ function draw(){
 		}
 	}
 
-	pointsOnGrid = calcNextGrid();
+	if(play)
+		pointsOnGrid = calcNextGrid();
 }
 
 function mouseClicked(){
